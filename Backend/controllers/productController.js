@@ -19,17 +19,16 @@ exports.createProduct = catchAsyncErrors(async(req,res,next)=>{
 //Get all product
 exports.getAllProducts = catchAsyncErrors(async(req,res)=>{
 
-    const resultPerPage = 5;
-    const productCount = await Product.countDocuments();
+    const resultPerPage = 8;
+    const productsCount = await Product.countDocuments();
 
-    console.log("Entering get all products...")
     const apiFeature = new ApiFeatures(Product.find(),req.query).search().filter().pagination(resultPerPage);
 
     const products = await apiFeature.query;
     res.status(200).json({
         success:true,
-        product:products,
-        productCount,
+        products,
+        productsCount,
     });
 });
 
@@ -122,8 +121,6 @@ exports.createProductReview = catchAsyncErrors(async(req,res,next)=> {
     });
 
     product.ratings = avg/product.reviews.length;
-    console.log(avg);
-    console.log(product.ratings);
 
     await product.save({validateBeforeSave:false});
 

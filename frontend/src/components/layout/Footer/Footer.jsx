@@ -5,10 +5,10 @@ import {  faStore } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
 return (
-        <footer className="text-center text-white bottom-0 mb-0" style={{"backgroundColor": "#f1f1f1;"}}>
+        <footer className="text-center text-white bottom-0 mb-0 bg-white" >
             <div className="container pt-9 m-auto">
                 <div className="flex justify-center justify-items-center mb-9">
-                    <Link to="#!" className="mr-9 text-blue-800">
+                    <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-blue-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f"
                             className="svg-inline--fa fa-facebook-f w-2.5" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 320 512">
@@ -17,7 +17,7 @@ return (
                             </path>
                         </svg>
                     </Link>
-                    <Link to="#!" className="mr-9 text-blue-800">
+                    <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100  text-blue-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="twitter"
                             className="svg-inline--fa fa-twitter w-4" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -26,7 +26,7 @@ return (
                             </path>
                         </svg>
                     </Link>
-                    <Link to="#!" className="mr-9 text-orange-800">
+                    <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-orange-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
                             className="svg-inline--fa fa-google w-3.5" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 488 512">
@@ -35,7 +35,7 @@ return (
                             </path>
                         </svg>
                     </Link>
-                    <Link to="#!" className="mr-9 text-red-800">
+                    <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-red-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram"
                             className="svg-inline--fa fa-instagram w-3.5" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 448 512">
@@ -44,7 +44,7 @@ return (
                             </path>
                         </svg>
                     </Link>
-                    <Link to="#!" className="mr-9 text-blue-800">
+                    <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-blue-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="linkedin-in"
                             className="svg-inline--fa fa-linkedin-in w-3.5" role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 448 512">
@@ -53,7 +53,7 @@ return (
                             </path>
                         </svg>
                     </Link>
-                    <Link to="#!" className="text-gray-800">
+                    <Link to="#!" className="hover:-translate-y-0.5 transition duration-100 text-gray-800">
                     <FontAwesomeIcon icon={faStore} size='sm' />
                     </Link>
                 </div>
@@ -67,4 +67,4 @@ return (
 )
 }
 
-export default Footer
+export default Footer;

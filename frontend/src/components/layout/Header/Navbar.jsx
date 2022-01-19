@@ -6,12 +6,12 @@ export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0">
+      <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <a
               className="text-lg  leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
-              href="#pablo"
+              href="/"
             >
               My Store
             </a>
@@ -26,7 +26,7 @@ export default function Navbar({ fixed }) {
           </div>
           <div
             className={
-              "lg:flex flex-grow items-center" +
+              "lg:flex flex-grow items-center " +
               (navbarOpen ? " flex " : " hidden")
             }
             id="example-navbar-danger"

@@ -2,32 +2,33 @@ import './App.css';
 import React from 'react';
 import Navbar from './components/layout/Header/Navbar';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import WebFont from 'webfontloader';
+// import WebFont from 'webfontloader';
 import Footer from './components/layout/Footer/Footer';
-import Home from './components/layout/Home/Home';
+import Home from './components/Home/Home';
+import ProductDetails from './components/product/ProductDetails';
+
 
 
 function App() {
 
-  React.useEffect(()=>{
-    WebFont.load({
-      google: {
-        families: ["Roboto", "Droid Sons"]
-      }
-    })
-  });
+  // React.useEffect(()=>{
+  //   WebFont.load({
+  //     google: {
+  //       families: ["Roboto", "Droid Sons"]
+  //     }
+  //   })
+  // });
 
   return (
       <BrowserRouter>
         <Navbar />
           <Routes>
-            <Route path="/" element={<Home />}>
-              {/* <Route path="expenses" element={<Expenses />} />
-              <Route path="invoices" element={<Invoices />} /> */}
-            </Route>
+            <Route exact path="/" element={<Home />} />
+            <Route  path="/product/:id" element={<ProductDetails />} />
           </Routes>
         <Footer />
       </BrowserRouter>
+              
   );
 }
 
