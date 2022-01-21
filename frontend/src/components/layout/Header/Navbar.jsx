@@ -1,20 +1,51 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch, faShoppingBag, faUser, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default function Navbar({ fixed }) {
+  const navigate = useNavigate();
+
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const [searchOpen,setSearchOpen] = React.useState(false);
+  const [searchNull,setSearchNull] = React.useState(true);
+
+  const [search,setSearch] = React.useState("");
+
+  const crossClickHandler = (e)=>{
+    e.preventDefault();
+    setSearchOpen(!searchOpen);
+  }
+
+  const searchChangeHandler = (e)=> {
+    var value = e.target.value.trim();
+    if(value.length === 0){
+      setSearchNull(true);
+    }else{
+      setSearchNull(false);
+      setSearch(value);
+    }
+  }
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+      navigate(`/products/${search}`);
+
+  }
+
+
   return (
     <>
       <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
+            <Link
               className="text-lg  leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
-              href="/"
+              to="/"
             >
               My Store
-            </a>
+            </Link>
             <button
               className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
@@ -33,36 +64,36 @@ export default function Navbar({ fixed }) {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:m-auto ">
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  href="#pablo"
+                  to="/"
                 >
                   <span className="mx-auto">Home</span>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  href="#pablo"
+                  to="/products"
                 >
-                  <span className={"mx-auto "}>Product</span>
-                </a>
+                  <span className={"mx-auto "}>Products</span>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  href="#pablo"
+                  to="#pablo"
                 >
                  <span className={"mx-auto "}>Contact</span>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  href="#pablo"
+                  to="#pablo"
                 >
                  <span className={"mx-auto "}>About</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -74,29 +105,48 @@ export default function Navbar({ fixed }) {
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto mr-0 ">
+              <form className={"flex flow-row " + (searchOpen ? "  " : " hidden ")} action="">
+                <input type="text" onChange={searchChangeHandler} className={`border-gray-200 rounded-full border pr-4 text-right `} />
               <li className="nav-item">
-                <a
+                {searchNull ? <button
+                  onClick={crossClickHandler}
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
-                  href="#pablo"
+                  to="/search"
                 >
-                  <FontAwesomeIcon icon={faSearch} size="lg"  /><span className={"ml-2 lg:hidden"}>Search</span>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
+                  <FontAwesomeIcon icon={faWindowClose} size="lg"  />
+                </button> : <button
+                  onClick={searchHandler}
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
-                  href="#pablo"
+                  to="/search"
+                >
+                  <FontAwesomeIcon icon={faSearch} size="lg"  />
+                </button>}
+              </li>
+                </form>
+                {!searchOpen && <li className="nav-item">
+                <button 
+                  onClick={()=>setSearchOpen(!searchOpen)}
+                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
+                >
+                  <FontAwesomeIcon icon={faSearch} size="lg" /><span className={"ml-2 lg:hidden"}>Search</span>
+                </button>
+              </li>}
+                
+              <li className="nav-item">
+                <Link
+                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
+                  to="#pablo"
                 >
                   <FontAwesomeIcon icon={ faUser } size="lg" /><span className={"ml-2 lg:hidden"}>Profile</span>
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a
+                <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
-                  href="#pablo"
+                  to="#pablo"
                 >
                   <FontAwesomeIcon icon={faShoppingBag } size="lg"/><span className={"ml-2 lg:hidden"}>Shopping Bag</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

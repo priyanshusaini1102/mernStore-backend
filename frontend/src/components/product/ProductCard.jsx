@@ -32,7 +32,7 @@ const Product = ({product}) => {
                     <div >
                         <ReactStars classNames="m-0 p-0" {...options} /> <span className='text-sm'>(${product.numOfReviews} reviews)</span>
                     </div>
-                    <span>${product.price}</span>
+                    <span className='text-black font-bold'>${product.price}</span>
                 </div>
             </div>
 

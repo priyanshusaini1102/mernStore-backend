@@ -1,7 +1,7 @@
 import React, { Fragment,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMouse } from "@fortawesome/free-solid-svg-icons";
-import ProductCard from './ProductCard';
+import ProductCard from '../product/ProductCard';
 import MetaData from "../layout/MetaData";
 import {clearErrors, getProduct} from '../../actions/productAction';
 import {useSelector,useDispatch} from 'react-redux';

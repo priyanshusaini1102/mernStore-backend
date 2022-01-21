@@ -7,6 +7,7 @@ import Loader from '../layout/loader/Loader';
 import ReactStars from 'react-rating-stars-component';
 import Carousel from '../layout/Carousel/Carousel';
 import ReviewCard from './ReviewCard';
+import MetaData from '../layout/MetaData';
 
 
 const ProductDetails = () => {
@@ -38,6 +39,7 @@ const ProductDetails = () => {
 
         {loading ? <Loader /> : 
             <Fragment>
+                <MetaData title={`My Store | ${product.name}`} />
                 <div className='flex flex-row  flex-wrap '>
 
                     <div className='lg:flex-1 flex-none m-auto   '>
