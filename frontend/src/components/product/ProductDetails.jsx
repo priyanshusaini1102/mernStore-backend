@@ -47,7 +47,7 @@ const ProductDetails = () => {
                     </div>
                     {/* Product Heading Section */}
                     <div className="flex-1 p-4 border-l-4 border-black ">
-                    <h1 className="text-3xl font-bold mb-3">{product && product.name}</h1>
+                    <h1 className="text-3xl font-bold mb-3 capitalize">{product && product.name}</h1>
                     <div className="flex flex-row flex-nowrap" >
                         <ReactStars classNames="m-0 p-0" {...options} /> <span className='whitespace-nowrap ml-4 justify-center items-center'>({product.numOfReviews} ratings)</span>
                     </div>

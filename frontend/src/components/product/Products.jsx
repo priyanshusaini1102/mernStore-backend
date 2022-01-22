@@ -7,14 +7,41 @@ import {useSelector,useDispatch} from 'react-redux';
 import {useAlert} from 'react-alert';
 import {useParams} from 'react-router-dom';
 import Pagination from "react-js-pagination";
+import { Slider } from '@material-ui/core';
+import Categories from '../layout/Categories/Categories';
+
+const categories = [
+    "All",
+    "Laptop",
+    "Footwear",
+    "Bottom",
+    "Tops",
+    "Attire",
+    "Camera",
+    "SmartPhones"
+]
 
 const Products = () => {
+    
 
     const alert = useAlert();
     const dispatch = useDispatch();
     const {keyword} = useParams();
-    const {products,error,loading,productsCount,resultPerPage} = useSelector((state)=> state.productsState);
+    const {products,error,loading,productsCount,resultPerPage,filteredProductsCount} = useSelector((state)=> state.productsState);
     const [currentPage,setCurrentPage] = useState(1);
+    const [price,setPrice] = useState([0,2500000]);
+    const [category,setCategory] = useState(categories[0]);
+    const [ratings,setRatings] = useState(0);
+
+    const priceHandler = (e,newPrice)=>{
+        e.preventDefault();
+        setPrice(newPrice);
+    }
+    const ratingHandler = (e,newRatings)=>{
+        e.preventDefault();
+        setRatings(newRatings);
+    }
+
     const setCurrentPageNumber = (e) => {
         setCurrentPage(e);
     }
@@ -23,35 +50,74 @@ const Products = () => {
         if(error) {
             alert.error(error);
         }
-        dispatch(getProduct(keyword,currentPage));
-    },[dispatch,alert,error,keyword,currentPage]);
+        dispatch(getProduct(keyword,currentPage,price,category,ratings));
+    },[dispatch,alert,error,keyword,currentPage,price,category,ratings]);
+
     return <Fragment>
             {loading ? <Loader /> : 
             <Fragment>
             <MetaData title="My Store | Products" />
-            <h2 id="featuredProduct" className="text-center text-xl p-3 mx-auto mt-6   ">Products</h2>
-            <div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
+            <div className='flex flex-row flex-wrap  '>
+                <div className='lg:border-r-2  border-black text-center border-2 mx-auto rounded-lg lg:ml-2 md:ml-2 sm:ml-2 h-fit '>
+                    <h1 className='text-xl mx-4 my-3 p-3'>Filters</h1><div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
+                    <div className='filter-box m-6 w-40 mx-auto '>
+                        <h2 className='block text-sm font-medium text-gray-700'>Price</h2>
+                        <Slider
+                            value={price}
+                            onChange={priceHandler}
+                            valueLabelDisplay='auto'
+                            aria-labelledby='range-slider'
+                            min={0}
+                            max={2500000}
+                            color='secondary'
+                            />
+                    </div>
+                    <div className='filter-box m-6 w-40 mx-auto '>
+                        <h2 className='block text-sm font-medium text-gray-700'>Categories</h2>
+                        <Categories category={category} setCategory={setCategory} categories={categories}/>
+                    </div>
+                    <fieldset className='filter-box m-6 w-40 mx-auto border border-gray-300 rounded-md px-3 shadow '>
+                        <legend className='block text-sm font-medium text-gray-700'>Rating Above</legend>
+                        <Slider
+                            value={ratings}
+                            onChange={ratingHandler}
+                            aria-labelledby='continuous-slider'
+                            min={0}
+                            max={5}
+                            valueLabelDisplay='auto'
+                            color='secondary'
+                            />
+                    </fieldset>
+                </div>
+                <div className='flex-1'>
+                    <h2 id="featuredProduct" className="text-center text-xl p-3 mx-auto mt-0    ">Products</h2>
+                    <div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
+                    <div className="flex flex-1 ml-0 basis-5 flex-row flex-wrap justify-center" >
 
-            <div className="flex basis-5 flex-row flex-wrap justify-center" >
-                {products && products.map((product)=> <ProductCard product={product} key={product._id}/>)}
+                        {products && products.map((product)=> <ProductCard product={product} key={product._id}/>)}
+                    </div>
+                </div>
             </div>
-            <div className="text-center m-3">
+
+                
+
+            {(filteredProductsCount > resultPerPage) && <div className="text-center m-3">
                 <Pagination
                     activePage={currentPage}
                     itemsCountPerPage={resultPerPage}
-                    totalItemsCount={products.length}
+                    totalItemsCount={productsCount}
                     onChange={setCurrentPageNumber}
                     nextPageText="Next"
                     prevPageText="Prev" 
                     firstPageText="1st"
                     lastPageText="Last"
-                    itemClass="p-2 text-center inline border-y-2 px-3 hover:bg-black hover:text-white border-black "
-                    linkClass=""
-                    activeClass="bg-black  p-2 text-white cursor:default"
+                    itemClass=" page-item p-2 text-center inline border-y-2 px-3 hover:bg-black hover:text-white border-black "
+                    linkClass="page-link"
+                    activeClass="bg-black p-2 text-white cursor:default "
                     activeLinkClass="font-bold  "
                 />
-            </div>
-            <p className="text-center font-bold text-black">{products.length>0 ? products.length : `No`} products are available.</p>
+            </div>}
+            <p className="text-center font-bold text-black">{filteredProductsCount>0 ? filteredProductsCount : `No`} products are available.</p>
             </Fragment>
             }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSearch, faShoppingBag, faUser, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,28 @@ export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   const [searchOpen,setSearchOpen] = React.useState(false);
   const [searchNull,setSearchNull] = React.useState(true);
+  const [activePage,setActivePage] = React.useState("Home");
 
   const [search,setSearch] = React.useState("");
+
+  const menuOptions = [
+    {
+      name:"Home",
+      to:"/",
+    },
+    {
+      name:"Products",
+      to:"/products",
+    },
+    {
+      name:"Contact",
+      to:"/contact",
+    },
+    {
+      name:"About Us",
+      to:"/aboutus",
+    },
+]
 
   const crossClickHandler = (e)=>{
     e.preventDefault();
@@ -33,7 +53,11 @@ export default function Navbar({ fixed }) {
       navigate(`/products/${search}`);
 
   }
-
+  const activeColor = (menuOption)=> {
+      if(menuOption.name===activePage){
+        return 'opacity-100'
+      }
+  }
 
   return (
     <>
@@ -42,7 +66,7 @@ export default function Navbar({ fixed }) {
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
               className="text-lg  leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
-              to="/"
+              to="/" 
             >
               My Store
             </Link>
@@ -63,38 +87,16 @@ export default function Navbar({ fixed }) {
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:m-auto ">
+              {menuOptions.map((menuOption)=>(
+
               <li className="nav-item">
                 <Link
-                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  to="/"
+                  className={"px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100 "+activeColor(menuOption)}
+                  to={menuOption.to} onClick={()=>setActivePage(menuOption.name)}
                 >
-                  <span className="mx-auto">Home</span>
+                  <span className="mx-auto">{menuOption.name}</span>
                 </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  to="/products"
-                >
-                  <span className={"mx-auto "}>Products</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  to="#pablo"
-                >
-                 <span className={"mx-auto "}>Contact</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100"
-                  to="#pablo"
-                >
-                 <span className={"mx-auto "}>About</span>
-                </Link>
-              </li>
+              </li>))}
             </ul>
           </div>
           <div

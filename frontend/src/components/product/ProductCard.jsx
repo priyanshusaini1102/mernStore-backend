@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
 
 
-const Product = ({product}) => {
+const Product = ({product,mx}) => {
     const options = {
         edit: false,
         color: "rgba(20,20,20,0.1",
@@ -24,10 +24,10 @@ const Product = ({product}) => {
             <span>${product.price}</span>
             </div> */}
            
-            <div className=" w-60  m-4 bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 duration-300 transform transition cursor-pointer">
+            <div className={" w-60  m-4 bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:scale-105 duration-300 transform transition cursor-pointer "+mx}>
                 <img className='h-60 object-cover' src={product.images[0].url} alt={product.images[0].url}/>
                 <div className="p-5">
-                    <h1 className="text-2xl font-bold">{product.name}</h1>
+                    <h1 className="text-2xl font-bold capitalize">{product.name}</h1>
                     <p className=' font-serif capitalize text-black'></p>
                     <div >
                         <ReactStars classNames="m-0 p-0" {...options} /> <span className='text-sm'>(${product.numOfReviews} reviews)</span>

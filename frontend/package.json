@@ -9,6 +9,8 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
+    "@material-ui/core": "^4.12.3",
+    "@mui/material": "^5.3.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -60,5 +62,5 @@
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.15"
   },
-  "proxy": "http://192.168.43.206:4000"
+  "proxy": "http://localhost:4000"
 }

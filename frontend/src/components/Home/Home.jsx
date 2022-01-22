@@ -15,7 +15,7 @@ const Home = () => {
   const alert = useAlert();
 
   const dispatch = useDispatch();
-  const { loading,error,products,productsCount } = useSelector((state)=> state.productsState);
+  const { loading,error,products } = useSelector((state)=> state.productsState);
 
   useEffect(()=>{
     if(error){
@@ -48,10 +48,9 @@ const Home = () => {
       <h2 id="featuredProduct" className="text-center text-xl p-3 mx-auto mt-6   ">Featured Product</h2>
       <div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
 
-      <div className="flex basis-5 flex-row flex-wrap justify-center" >
-          {products && products.map((product)=> <ProductCard product={product} key={product._id}/>)}
+      <div className="flex basis-5 flex-row flex-wrap justify-center " >
+          {products && products.map((product)=> <ProductCard mx="mx-8" product={product} key={product._id}/>)}
       </div>
-      <p className="text-center font-bold text-black">{productsCount} products are available.</p>
     </Fragment>}
     </Fragment>
     
