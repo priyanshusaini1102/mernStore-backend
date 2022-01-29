@@ -72,7 +72,6 @@ const LoginSignUp = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-      console.log(isAuthenticated); 
       if(isAuthenticated){
         navigate("/account");
       }

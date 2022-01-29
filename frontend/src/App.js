@@ -12,18 +12,13 @@ import AboutUs from './components/AboutUs/AboutUs';
 import Account from './components/User/Account';
 import store from './store';
 import { loadUser } from './actions/userAction';
-import {useSelector} from 'react-redux';
 
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
 
   useEffect(()=>{
-    console.log("before dispatch loaduser...");
     store.dispatch(loadUser());
-    console.log("after dispatch loaduser...");
-    console.log(user);
-  }, [user]);
+  }, []);
 
 
 
