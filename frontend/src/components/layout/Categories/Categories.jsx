@@ -17,7 +17,7 @@ export default function Categories({category,setCategory,categories}) {
       {({ open }) => (
         <>
           <div className="mt-1 relative shadow">
-            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm">
               <span className="flex items-center">
                 <span className="ml-3 block truncate">{category}</span>
               </span>
@@ -40,7 +40,7 @@ export default function Categories({category,setCategory,categories}) {
                     key={category}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                        active ? 'text-white bg-red-600' : 'text-gray-900',
                         'cursor-default select-none relative py-2 pl-3 pr-9'
                       )
                     }
@@ -59,7 +59,7 @@ export default function Categories({category,setCategory,categories}) {
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
+                              active ? 'text-white' : 'text-red-600',
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}
                           >

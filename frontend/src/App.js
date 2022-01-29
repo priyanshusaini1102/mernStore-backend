@@ -1,29 +1,41 @@
 import './App.css';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from './components/layout/Header/Navbar';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-// import WebFont from 'webfontloader';
 import Footer from './components/layout/Footer/Footer';
 import Home from './components/Home/Home';
 import ProductDetails from './components/product/ProductDetails';
 import Products from './components/product/Products';
+import Contact from './components/Contact/Contact';
+import LoginSignUp from './components/User/LoginSignUp';
+import AboutUs from './components/AboutUs/AboutUs';
+import Account from './components/User/Account';
+import store from './store';
+import { loadUser } from './actions/userAction';
+import {useSelector} from 'react-redux';
 
 
 function App() {
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
-  // React.useEffect(()=>{
-  //   WebFont.load({
-  //     google: {
-  //       families: ["Roboto", "Droid Sons"]
-  //     }
-  //   })
-  // });
+  useEffect(()=>{
+    console.log("before dispatch loaduser...");
+    store.dispatch(loadUser());
+    console.log("after dispatch loaduser...");
+    console.log(user);
+  }, [user]);
+
+
 
   return (
       <BrowserRouter>
-        <Navbar />
+        <Navbar  />
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route exact path="/contact" element={<Contact/>} />
+            <Route exact path="/aboutus" element={<AboutUs/>} />
+            <Route exact path="/account" element={<Account/>} />
+            <Route exact path="/login" element={<LoginSignUp />} />
             <Route  path="/product/:id" element={<ProductDetails />} />
             <Route exact path="/products" element={<Products />} />
             <Route exact path="/products/:keyword" element={<Products />} />

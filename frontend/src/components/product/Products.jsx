@@ -18,7 +18,9 @@ const categories = [
     "Tops",
     "Attire",
     "Camera",
-    "SmartPhones"
+    "SmartPhones",
+    "Mobile",
+    "Cartoon"
 ]
 
 const Products = () => {
@@ -54,12 +56,12 @@ const Products = () => {
     },[dispatch,alert,error,keyword,currentPage,price,category,ratings]);
 
     return <Fragment>
-            {loading ? <Loader /> : 
+            
             <Fragment>
             <MetaData title="My Store | Products" />
             <div className='flex flex-row flex-wrap  '>
-                <div className='lg:border-r-2  border-black text-center border-2 mx-auto rounded-lg lg:ml-2 md:ml-2 sm:ml-2 h-fit '>
-                    <h1 className='text-xl mx-4 my-3 p-3'>Filters</h1><div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
+                <div className='mx-auto sm:mx-4 lg:border-r-2  my-4 sm:sticky top-28 shadow-md text-center border rounded-lg  h-fit '>
+                    <h1 className='text-xl  my-3 p-3'>Filters</h1><div className="bg-black h-0.5 w-60 m-2"></div>
                     <div className='filter-box m-6 w-40 mx-auto '>
                         <h2 className='block text-sm font-medium text-gray-700'>Price</h2>
                         <Slider
@@ -89,13 +91,13 @@ const Products = () => {
                             />
                     </fieldset>
                 </div>
-                <div className='flex-1'>
-                    <h2 id="featuredProduct" className="text-center text-xl p-3 mx-auto mt-0    ">Products</h2>
+                <div className='flex-1 my-4 lg:border-l w-fit '>
+                    <h2 id="featuredProduct" className="text-center text-xl p-3 mx-auto mt-0 ">Products</h2>
                     <div className="bg-black h-0.5 w-60 mx-auto my-2"></div>
-                    <div className="flex flex-1 ml-0 basis-5 flex-row flex-wrap justify-center" >
+                    {loading ? <Loader /> : <div className="flex flex-1 ml-0 basis-5 flex-row flex-wrap justify-center" >
 
                         {products && products.map((product)=> <ProductCard product={product} key={product._id}/>)}
-                    </div>
+                    </div>}
                 </div>
             </div>
 
@@ -119,7 +121,7 @@ const Products = () => {
             </div>}
             <p className="text-center font-bold text-black">{filteredProductsCount>0 ? filteredProductsCount : `No`} products are available.</p>
             </Fragment>
-            }
+            
 
         </Fragment>
     

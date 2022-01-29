@@ -4,15 +4,14 @@ import { faBars, faSearch, faShoppingBag, faUser, faWindowClose } from '@fortawe
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 
-export default function Navbar({ fixed }) {
+export default function Navbar() {
   const navigate = useNavigate();
 
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
-  const [searchOpen,setSearchOpen] = React.useState(false);
-  const [searchNull,setSearchNull] = React.useState(true);
-  const [activePage,setActivePage] = React.useState("Home");
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [searchOpen,setSearchOpen] = useState(false);
+  const [searchNull,setSearchNull] = useState(true);
+  const [search,setSearch] = useState("");
 
-  const [search,setSearch] = React.useState("");
 
   const menuOptions = [
     {
@@ -53,15 +52,11 @@ export default function Navbar({ fixed }) {
       navigate(`/products/${search}`);
 
   }
-  const activeColor = (menuOption)=> {
-      if(menuOption.name===activePage){
-        return 'opacity-100'
-      }
-  }
+  
 
   return (
     <>
-      <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10">
+      <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10 border-b">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
@@ -89,10 +84,11 @@ export default function Navbar({ fixed }) {
             <ul className="flex flex-col lg:flex-row list-none lg:m-auto ">
               {menuOptions.map((menuOption)=>(
 
-              <li className="nav-item">
+              <li className="nav-item" key={menuOption.name}>
                 <Link
-                  className={"px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100 "+activeColor(menuOption)}
-                  to={menuOption.to} onClick={()=>setActivePage(menuOption.name)}
+                  className={"px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100 "}
+                  to={menuOption.to}
+                  
                 >
                   <span className="mx-auto">{menuOption.name}</span>
                 </Link>
@@ -107,7 +103,7 @@ export default function Navbar({ fixed }) {
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto mr-0 ">
-              <form className={"flex flow-row " + (searchOpen ? "  " : " hidden ")} action="">
+              <form className={"flex flow-row " + (searchOpen ? "  " : " hidden ")} >
                 <input type="text" onChange={searchChangeHandler} className={`border-gray-200 rounded-full border pr-4 text-right `} />
               <li className="nav-item">
                 {searchNull ? <button
@@ -137,7 +133,7 @@ export default function Navbar({ fixed }) {
               <li className="nav-item">
                 <Link
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
-                  to="#pablo"
+                  to="/login"
                 >
                   <FontAwesomeIcon icon={ faUser } size="lg" /><span className={"ml-2 lg:hidden"}>Profile</span>
                 </Link>
