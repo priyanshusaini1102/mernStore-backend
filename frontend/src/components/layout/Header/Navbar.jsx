@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSearch, faShoppingBag, faUser, faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -59,12 +59,13 @@ export default function Navbar() {
       <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10 border-b">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <Link
+            <NavLink
               className="text-lg  leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
+              
               to="/" 
             >
               My Store
-            </Link>
+            </NavLink>
             <button
               className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
@@ -85,13 +86,13 @@ export default function Navbar() {
               {menuOptions.map((menuOption)=>(
 
               <li className="nav-item" key={menuOption.name}>
-                <Link
+                <NavLink
                   className={"px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100 "}
                   to={menuOption.to}
-                  
+                  activeClassName="text-white"
                 >
                   <span className="mx-auto">{menuOption.name}</span>
-                </Link>
+                </NavLink>
               </li>))}
             </ul>
           </div>
@@ -131,20 +132,20 @@ export default function Navbar() {
               </li>}
                 
               <li className="nav-item">
-                <Link
+                <NavLink
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
                   to="/login"
                 >
                   <FontAwesomeIcon icon={ faUser } size="lg" /><span className={"ml-2 lg:hidden"}>Profile</span>
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link
+                <NavLink
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
                   to="#pablo"
                 >
                   <FontAwesomeIcon icon={faShoppingBag } size="lg"/><span className={"ml-2 lg:hidden"}>Shopping Bag</span>
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

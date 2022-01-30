@@ -1,17 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {logout} from '../../actions/userAction';
+import { useDispatch } from 'react-redux';
+import {useAlert} from 'react-alert';
+import Loader from '../layout/loader/Loader';
+import MetaData from '../layout/MetaData';
+import UpdateProfile from './UpdateProfile';
 
 const Account = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const alert = useAlert();
     const {isAuthenticated, user} = useSelector((state)=> state.userState);
 
-    const logoutHandler = () => {
-        console.log("logout");
-        if(user.name){
+    const [edit,setEdit] = useState(false);
 
-            console.log(user.avatar.url);
-        }
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        navigate("/");
+        alert.success("successfully logout ");
     }
 
     useEffect(()=>{
@@ -20,27 +29,40 @@ const Account = () => {
         }
     },[isAuthenticated,navigate])
 
-  return <div className="rounded-3xl mx-auto  overflow-hidden shadow-lg drop-shadow-lg max-w-xs my-16 bg-red-500">
+  return <Fragment>
+      <MetaData title={`My Store | Account`}/>
+      <div className=''>
+      {user ? (edit ? (
+          <UpdateProfile edit={edit} setEdit={setEdit}/>
+    ) : (
+    <div className="rounded-3xl mx-auto  overflow-hidden shadow-lg drop-shadow-lg max-w-xs my-16 bg-red-500">
   	<img src="https://cdn.pixabay.com/photo/2018/01/24/18/05/background-3104413_960_720.jpg" alt='img' className="w-full" />
+
     <div className="flex justify-center -mt-8">
-        <img src={user.name ? user.avatar.url :`https://demos.creative-tim.com/notus-js/assets/img/team-1-800x800.jpg`} alt='img' className="w-20 h-20 object-cover rounded-full border-solid border-white border-2 -mt-3"/>		
+        <img src={user.name ? user.avatar.url :`https://demos.creative-tim.com/notus-js/assets/img/team-1-800x800.jpg`} alt='img' className="w-24 h-24 object-cover rounded-full border-solid border-white border-2 -mt-3"/>		
     </div>
+
 	<div className="text-center px-3 pb-6 pt-2">
 		<h3 className="text-white text-sm bold font-sans">{user.name}</h3>
 		<p className="mt-2 font-sans font-light text-white">{user.email}</p>
 	</div>
   	<div className="flex justify-center pb-3 text-white">
       <div className="text-center mr-3 border-r pr-3">
-        <h2>Role</h2>
-        <span>{user.role}</span>
+        <h2 className='text-black'>Role</h2>
+        <span className='capitalize text-sm '>{user.role}</span>
       </div>
       <div className="text-center">
-        <h2>42</h2>
-        <span>Friends</span>
+        <h2 className='text-black'>Joined On</h2>
+        <span className='text-sm'>{String(user.createdAt).substr(0, 10)}</span>
       </div>
   	</div>
-      <button className='px-4 py-2  border-2 border-black text-black rounded-3xl m-3 mx-auto block hover:bg-black hover:text-white' onClick={logoutHandler}>Log out</button>
-</div>
+    <div className='flex flex-row justify-center flex-wrap my-3'>
+        <button className='px-4 py-2 m-1 whitespace-nowrap border text-sm border-red-700 text-white rounded-3xl shadow hover:bg-red-700 hover:shadow-inner' onClick={()=>setEdit(!edit)}>Edit</button>
+        <button className='px-4 py-2 m-1 whitespace-nowrap border text-sm border-red-700 text-white rounded-3xl shadow hover:bg-red-700 hover:shadow-inner' >My Orders</button>
+        <button className='px-4 py-2 m-1 whitespace-nowrap border text-sm border-red-700 text-white rounded-3xl shadow hover:bg-red-700 hover:shadow-inner' onClick={logoutHandler}>Log out</button>
+    </div>
+    <p className='underline text-sm font-serif cursor-pointer text-center m-3 bold text-white py-1 rounded-full w-48 mx-auto px-3 hover:bg-red-700'><Link to="/password/update">Update/Change Password</Link></p>
+    </div>)) : <Loader/>}</div></Fragment>
 };
 
 export default Account;

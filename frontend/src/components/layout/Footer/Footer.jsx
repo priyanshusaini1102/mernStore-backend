@@ -5,7 +5,7 @@ import {  faStore } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
 return (
-        <footer className="text-center text-white bottom-0 mb-0 bg-white" >
+        <footer className="text-center text-white bottom-0 mb-0 bg-white border-t mt-6" >
             <div className="container pt-9 m-auto">
                 <div className="flex justify-center justify-items-center mb-9">
                     <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-blue-800">

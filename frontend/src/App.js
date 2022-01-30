@@ -11,7 +11,10 @@ import LoginSignUp from './components/User/LoginSignUp';
 import AboutUs from './components/AboutUs/AboutUs';
 import Account from './components/User/Account';
 import store from './store';
-import { loadUser } from './actions/userAction';
+import {  loadUser } from './actions/userAction';
+import UpdatePassword from './components/User/UpdatePassword';
+import ForgotPassword from './components/User/ForgotPassword';
+import ResetPassword from './components/User/ResetPassword';
 
 
 function App() {
@@ -34,6 +37,9 @@ function App() {
             <Route  path="/product/:id" element={<ProductDetails />} />
             <Route exact path="/products" element={<Products />} />
             <Route exact path="/products/:keyword" element={<Products />} />
+            <Route path="/password/reset/:token" element={<ResetPassword />} />
+            <Route exact path="/password/update" element={<UpdatePassword />} />
+            <Route exact path="/password/forgot" element={<ForgotPassword />} />
           </Routes>
         <Footer />
       </BrowserRouter>

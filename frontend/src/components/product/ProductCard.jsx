@@ -21,10 +21,13 @@ const Product = ({product,mx}) => {
                 <div className="p-5">
                     <h1 className="text-2xl font-bold capitalize">{product.name}</h1>
                     <p className=' font-serif capitalize text-black'></p>
-                    <div >
-                        <ReactStars classNames="m-0 p-0" {...options} /> <span className='text-sm'>({product.numOfReviews} reviews)</span>
+                    <div className='flex flex-row items-center' >
+                    <div><ReactStars classNames="m-0 p-0" {...options} /></div> <div className='m-2'><span className='text-sm'>({product.numOfReviews} reviews)</span></div>
                     </div>
-                    <span className='text-black font-bold'>${product.price}</span>
+                    <div className='flex flex-row justify-between items-center'>
+                    <p className='text-black font-bold inline'>${product.price}</p>
+                        <button className='text-xs mt-2 bg-black text-white rounded-lg p-2'>Add to Cart</button>
+                    </div>
                 </div>
             </div>
 

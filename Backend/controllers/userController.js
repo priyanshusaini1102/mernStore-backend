@@ -84,7 +84,7 @@ exports.forgotPassword = catchAsyncErrors(async(req,res,next)=>{
 
     await user.save({validateBeforeSave: false});
 
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`
 
     const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\n if you have not requested this email then please ignore it.`;
 
@@ -181,27 +181,42 @@ exports.updatePassword = catchAsyncErrors(async(req,res,next)=>{
 
 })
 
-//update user profile
-exports.updateProfile = catchAsyncErrors(async(req,res,next)=>{
-
+// update User Profile
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
-        name:req.body.name,
-        email:req.body.email
+      name: req.body.name,
+      email: req.body.email,
+    };
+  
+    if (req.body.avatar !== "") {
+      const user = await User.findById(req.user.id);
+  
+      const imageId = user.avatar.public_id;
+  
+      await cloudinary.v2.uploader.destroy(imageId);
+  
+      const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+  
+      newUserData.avatar = {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      };
     }
-
-    //we will add cloudinary later
-
-    const user = await User.findByIdAndUpdate(req.user.id,newUserData,{
-        new:true,
-        runValidators:true,
-        useFindAndModify:false
+  
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
     });
-
+  
     res.status(200).json({
-        success:true,
-
-    })
-})
+      success: true,
+    });
+  });
 
 //get all users -admin
 exports.getAllUsers = catchAsyncErrors(async(req,res,next)=> {

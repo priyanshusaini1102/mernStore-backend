@@ -1,7 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
+import MetaData from "../layout/MetaData";
 
 const AboutUs = () => {
     return (
+        <Fragment>
+            <MetaData title={`My Store | About Us`} />
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4 ">
             <div className="flex flex-col lg:flex-row justify-between gap-8">
                 <div className="w-full lg:w-5/12 flex flex-col justify-center">
@@ -39,7 +42,7 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div></Fragment>
     );
 };
 
