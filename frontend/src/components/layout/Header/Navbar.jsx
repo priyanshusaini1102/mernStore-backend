@@ -89,7 +89,6 @@ export default function Navbar() {
                 <NavLink
                   className={"px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black opacity-75 hover:opacity-100 "}
                   to={menuOption.to}
-                  activeClassName="text-white"
                 >
                   <span className="mx-auto">{menuOption.name}</span>
                 </NavLink>
@@ -142,7 +141,7 @@ export default function Navbar() {
               <li className="nav-item">
                 <NavLink
                   className="px-3 py-2 flex items-center text-md capitaliize  leading-snug text-black hover:opacity-75"
-                  to="#pablo"
+                  to="/cart"
                 >
                   <FontAwesomeIcon icon={faShoppingBag } size="lg"/><span className={"ml-2 lg:hidden"}>Shopping Bag</span>
                 </NavLink>

@@ -8,6 +8,7 @@ import ReactStars from 'react-rating-stars-component';
 import Carousel from '../layout/Carousel/Carousel';
 import ReviewCard from './ReviewCard';
 import MetaData from '../layout/MetaData';
+import { addItemToCart } from '../../actions/cartActions';
 
 
 const ProductDetails = () => {
@@ -17,6 +18,27 @@ const ProductDetails = () => {
     const dispatch = useDispatch();
     const { product,loading,error } = useSelector((state) => state.productDetailsState);
     const [quantity, setQuantity] = useState(1);
+
+    const increaseQuantity = () => {
+        if(quantity < product.stock){
+            setQuantity(quantity+1);
+        }
+    };
+
+    const decreaseQuantity = () => {
+        if(quantity >1){
+            setQuantity(quantity-1);
+
+        }
+    };
+
+    const addToCartHandler = () => {
+        dispatch(addItemToCart(id, quantity));
+        alert.success("Item added to cart.");
+    };
+
+    
+
     useEffect(() => {
         if(error){
                     alert.error(error);
@@ -28,7 +50,7 @@ const ProductDetails = () => {
     
     const options = {
         edit: false,
-        color: "rgba(20,20,20,0.1",
+        color: "rgba(20,20,20,0.1)",
         activeColor: "tomato",
         size: window.innerWidth < 600 ? 20 : 25,
         value: product.ratings,
@@ -55,18 +77,16 @@ const ProductDetails = () => {
                     {/* Product Buy Section */}
                     <div className="flex flex-row ">
                     <div className='mx-3 ml-0 border flex flex-row  border-black rounded w-fit '>
-                        <button className="flex-none px-3 py-1 rounded-sm  hover:shadow-black " onClick={()=>setQuantity(quantity-1)}>-</button>
+                        <button className="flex-none px-3 py-1 rounded-sm  hover:shadow-black " onClick={decreaseQuantity}>-</button>
                             <p  name="qty"  className="flex-none w-12 p-2  text-center bg-gray-100 outline-none">{quantity}</p>
-                        <button className="flex-none px-3 py-1 mr-0 rounded-sm " onClick={()=>setQuantity(quantity+1)}>+</button>
+                        <button className="flex-none px-3 py-1 mr-0 rounded-sm " onClick={increaseQuantity}>+</button>
                     </div>
-                        <button type="button" className="whitespace-nowrap lg:ml-2 ml-0 px-3 py-1 m-1 text-yellow-800 border border-yellow-800 rounded-md  hover:bg-yellow-800 hover:text-white">
-                        Add To Cart
+                        <button disabled={product.stock<1?true:false} type="button" className="whitespace-nowrap lg:ml-2 ml-0 px-3 py-2 mx-1 text-yellow-800 border border-yellow-800 rounded-md  hover:bg-yellow-800 hover:text-white" onClick={addToCartHandler}>
+                        Add To Bag
                     </button>
                     </div>
                     <p className="text-xs  font-serif font-thin text-gray-500">Status:<span className="text-xs ml-1 font-serif font-thin text-green-500">In Stock</span></p>
-                    <button type="button" className="px-6 py-2 ml-0 m-1 mt-5  lg:w-fit md:w-fit w-full text-black border border-black rounded-md  hover:bg-gray-800 hover:text-white">
-                        Buy Now
-                    </button>
+                    
                     {/* Product Description Section */}
                     <p className="text-lg font-semibold mt-6 ">About this item</p>
                     <p className="text-gray-800">{product.description}</p>

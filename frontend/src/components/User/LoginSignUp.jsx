@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux';
 import { clearErrors, login, register } from '../../actions/userAction';
 import {useAlert} from 'react-alert';
@@ -14,6 +14,7 @@ const LoginSignUp = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [toggle,setToggle] = useState(true);
 
@@ -69,17 +70,19 @@ const LoginSignUp = () => {
     dispatch(register(myForm));
   }
 
+  const redirect = location.search ? location.search.split("=")[1] : "/account";
+
   useEffect(()=>{
     if(error){
       alert.error(error);
       dispatch(clearErrors());
     }
       if(isAuthenticated){
-        navigate("/account");
+        navigate(redirect);
       }
     
     
-  },[alert,dispatch,error,isAuthenticated,navigate]);
+  },[alert,dispatch,error,isAuthenticated,navigate,redirect]);
   
   return <Fragment>
     <MetaData title={`My Store | Login`} />

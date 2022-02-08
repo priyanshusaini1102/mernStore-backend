@@ -5,9 +5,9 @@ import {  faStore } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
 return (
-        <footer className="text-center text-white bottom-0 mb-0 bg-white border-t mt-6" >
-            <div className="container pt-9 m-auto">
-                <div className="flex justify-center justify-items-center mb-9">
+        <footer className="text-center text-white bottom-0 mb-0 bg-white border-t " >
+            <div className="container py-8 m-auto">
+                <div className="flex justify-center justify-items-center ">
                     <Link to="#!" className="mr-9 hover:-translate-y-0.5 transition duration-100 text-blue-800">
                         <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f"
                             className="svg-inline--fa fa-facebook-f w-2.5" role="img" xmlns="http://www.w3.org/2000/svg"

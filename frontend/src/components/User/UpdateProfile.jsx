@@ -71,8 +71,8 @@ const UpdateProfile = ({edit,setEdit}) => {
       }
     },[dispatch,error,alert,isUpdated,setEdit,edit])
 
-  return <Fragment>{loading ? <Loader /> : (<div className="rounded-3xl mx-auto overflow-hidden shadow-lg drop-shadow-md max-w-xs my-16 bg-red-500">
-  <img src="https://cdn.pixabay.com/photo/2018/01/24/18/05/background-3104413_960_720.jpg" alt='img' className="w-full" />
+  return <Fragment>{loading ? <Loader /> : (<div className="rounded-3xl mx-auto overflow-hidden shadow-lg drop-shadow-md max-w-xs bg-purple-500">
+  <img src="https://images.pexels.com/photos/114979/pexels-photo-114979.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt='img' className="w-full h-32" />
   <form encType="multipart/form-data" onSubmit={updateSubmitHandler}>
     <div className="flex justify-center -mt-8">
         <img src={avatarPreview} alt='img' className="w-24 h-24 object-cover rounded-full border-solid border-white border-2 -mt-3"/>		
@@ -84,8 +84,8 @@ const UpdateProfile = ({edit,setEdit}) => {
     </div>
     <p className='text-xs text-gray-800 italic text-center '>Image should be less than 750kb.</p>
     <div className="text-center px-3 pb-6 pt-2">
-        <input name='name' type="text" className='bg-red-800 rounded-2xl py-1 text-white text-sm text-center font-sans shadow px-3' value={userData.name} onChange={updateDataChangeHandler} /> 
-        <input name='email' type="text" className='bg-red-800 rounded-2xl py-1  mt-2 text-center font-sans font-light text-white px-3 w-full' value={userData.email} onChange={updateDataChangeHandler} /> 
+        <input name='name' type="text" className='bg-purple-800 rounded-2xl py-1 text-white text-sm text-center font-sans shadow px-3' value={userData.name} onChange={updateDataChangeHandler} /> 
+        <input name='email' type="text" className='bg-purple-800 rounded-2xl py-1  mt-2 text-center font-sans font-light text-white px-3 w-full' value={userData.email} onChange={updateDataChangeHandler} /> 
     </div>
     <div className="flex justify-center pb-3 text-white">
       <div className="text-center mr-3 border-r pr-3">
@@ -98,8 +98,8 @@ const UpdateProfile = ({edit,setEdit}) => {
       </div>
   	</div>
     <div className='flex flex-row justify-center my-3'>
-    <button type='submit' className=' px-4 py-2 m-1 whitespace-nowrap border text-sm border-red-700  text-white rounded-3xl shadow hover:bg-red-700 hover:shadow-inner' >Submit</button>
-    <button className='px-4 py-2 m-1 whitespace-nowrap border text-sm border-red-700 text-white rounded-3xl shadow hover:bg-red-700 hover:shadow-inner' onClick={()=>setEdit(!edit)}>Don't Save</button>
+    <button type='submit' className=' px-4 py-2 m-1 whitespace-nowrap border text-sm border-purple-700  text-white rounded-3xl shadow hover:bg-purple-700 hover:shadow-inner' >Submit</button>
+    <button className='px-4 py-2 m-1 whitespace-nowrap border text-sm border-purple-700 text-white rounded-3xl shadow hover:bg-purple-700 hover:shadow-inner' onClick={()=>setEdit(!edit)}>Don't Save</button>
     </div>
   </form>
   </div>)}</Fragment>;

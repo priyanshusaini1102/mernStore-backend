@@ -119,7 +119,7 @@ const Products = () => {
                     activeLinkClass="font-bold  "
                 />
             </div>}
-            <p className="text-center font-bold text-black">{filteredProductsCount>0 ? filteredProductsCount : `No`} products are available.</p>
+            <p className="text-center font-bold text-black mb-5">{filteredProductsCount>0 ? filteredProductsCount : `No`} products are available.</p>
             </Fragment>
             
 
