@@ -1,14 +1,22 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux';
-import { clearErrors, getProductDetails } from '../../actions/productAction';
+import { clearErrors, getProductDetails, newReview } from '../../actions/productAction';
 import { useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import Loader from '../layout/loader/Loader';
-import ReactStars from 'react-rating-stars-component';
 import Carousel from '../layout/Carousel/Carousel';
 import ReviewCard from './ReviewCard';
 import MetaData from '../layout/MetaData';
 import { addItemToCart } from '../../actions/cartActions';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Button,
+  } from "@material-ui/core";
+  import { Rating } from "@material-ui/lab";
+  import { NEW_REVIEW_RESET } from "../../constants/productConstant";
 
 
 const ProductDetails = () => {
@@ -16,8 +24,15 @@ const ProductDetails = () => {
     const alert = useAlert();
     const { id } = useParams();
     const dispatch = useDispatch();
+    
     const { product,loading,error } = useSelector((state) => state.productDetailsState);
+    const { success, error: reviewError } = useSelector((state)=>state.newReviewState);
+
+
     const [quantity, setQuantity] = useState(1);
+    const [open, setOpen] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
 
     const increaseQuantity = () => {
         if(quantity < product.stock){
@@ -37,25 +52,48 @@ const ProductDetails = () => {
         alert.success("Item added to cart.");
     };
 
+    const submitReviewToggle = () => {
+        open ? setOpen(false) : setOpen(true);
+      };
+    
+      const reviewSubmitHandler = () => {
+        const myForm = new FormData();
+    
+        myForm.set("rating", rating);
+        myForm.set("comment", comment);
+        myForm.set("productId",id);
+    
+        dispatch(newReview(myForm));
+    
+        setOpen(false);
+      };
+
     
 
     useEffect(() => {
         if(error){
-                    alert.error(error);
-                    dispatch(clearErrors());
-                  }
+            alert.error(error);
+            dispatch(clearErrors());
+        }
+
+        if (reviewError) {
+            alert.error(reviewError);
+            dispatch(clearErrors());
+        }
+
+        if (success) {
+            alert.success("Review Submitted Successfully");
+            dispatch({ type: NEW_REVIEW_RESET });
+        }
 
         dispatch(getProductDetails(id));
-    }, [dispatch,id,error,alert]);
+    }, [dispatch,id,error,alert, reviewError, success]);
     
     const options = {
-        edit: false,
-        color: "rgba(20,20,20,0.1)",
-        activeColor: "tomato",
-        size: window.innerWidth < 600 ? 20 : 25,
         value: product.ratings,
-        isHalf: true
-    }
+        readOnly: true,
+        precision: 0.5,
+    };
     return (
         <Fragment>
 
@@ -71,7 +109,7 @@ const ProductDetails = () => {
                     <div className="flex-1 p-4 border-l-4 my-2 border-black ">
                     <h1 className="text-3xl font-bold mb-3 capitalize">{product && product.name}</h1>
                     <div className="flex flex-row flex-nowrap" >
-                        <ReactStars classNames="m-0 p-0" {...options} /> <span className='whitespace-nowrap ml-4 justify-center items-center'>({product.numOfReviews} ratings)</span>
+                        <Rating classNames="m-0 p-0" {...options} /> <span className='whitespace-nowrap ml-4 justify-center items-center'>({product.numOfReviews} ratings)</span>
                     </div>
                     <h2 className="text-lg text-gray-600 font-thin m-3  ml-0 ">Price : <span className='text-sm'>₹</span>{product.price}</h2>
                     {/* Product Buy Section */}
@@ -85,12 +123,12 @@ const ProductDetails = () => {
                         Add To Bag
                     </button>
                     </div>
-                    <p className="text-xs  font-serif font-thin text-gray-500">Status:<span className="text-xs ml-1 font-serif font-thin text-green-500">In Stock</span></p>
+                    <p className="text-xs  font-serif font-thin text-gray-500">Status:<span className={"text-xs ml-1 font-serif font-thin pt-1 "+(product.stock<1 ? "text-red-500"  : " text-green-500")}>{product.stock<1 ? "Out Of Stock" : "In Stock"}</span></p>
                     
                     {/* Product Description Section */}
                     <p className="text-lg font-semibold mt-6 ">About this item</p>
                     <p className="text-gray-800">{product.description}</p>
-                    <button type="button" className="whitespace-nowrap px-6 py-2 ml-0 m-1 mt-5 text-gray-800 border border-gray-400 rounded-md  hover:bg-gray-200 hover:text-black">
+                    <button onClick={submitReviewToggle} type="button" className="whitespace-nowrap px-6 py-2 ml-0 m-1 mt-5 text-gray-800 border border-gray-400 rounded-md  hover:bg-gray-200 hover:text-black">
                         Submit Review
                     </button>
                     </div>
@@ -98,6 +136,37 @@ const ProductDetails = () => {
                 {/* Reviews Scetion */}
                 <div className=" border-black border-t-2 border-b-2 rounded-lg shadow-lg my-6  m-3">
                 <h3 className="text-2xl font-bold text-black mx-4">Reviews</h3>
+
+                <Dialog
+                    aria-labelledby="simple-dialog-title"
+                    open={open}
+                    onClose={submitReviewToggle}
+                >
+                    <DialogTitle>Submit Review</DialogTitle>
+                    <DialogContent className="submitDialog">
+                    <Rating
+                        onChange={(e) => setRating(e.target.value)}
+                        value={rating}
+                        size="large"
+                    />
+
+                    <textarea
+                        className="submitDialogTextArea"
+                        cols="30"
+                        rows="5"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={submitReviewToggle} color="secondary">
+                        Cancel
+                    </Button>
+                    <Button onClick={reviewSubmitHandler} color="primary">
+                        Submit
+                    </Button>
+                    </DialogActions>
+                </Dialog>
 
                 {product.reviews && product.reviews[0] ? (
                     <div className=" m-4 shadow-md rounded-xl p-2 ">

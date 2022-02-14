@@ -19,7 +19,7 @@ const OrderCard = ({order}) => {
         <div className='flex-1 flex flex-col justify-between'>
             <div className='flex flex-col justify-start'>
             <h2 className='font-bold capitalize'>{order.orderItems.length>1 ? `${order.orderItems[0].name} ` : order.orderItems[0].name }</h2>
-            <span className='sm:text-sm text-xs font-thin'>{`with more ${order.orderItems.length-1} items`}</span>
+            <span className='sm:text-sm text-xs font-thin'>{order.orderItems.length>1 ? `with more ${order.orderItems.length-1} items` : ""}</span>
             </div>
             <h2> <span className='sm:inline hidden'> Status: </span><span className={statusColor}>{order.orderStatus}</span></h2>
         </div>

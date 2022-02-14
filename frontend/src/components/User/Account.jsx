@@ -98,6 +98,14 @@ const Account = () => {
                   Log out
                 </button>
               </div>
+              {user.role === "admin" && <div className=" mx-4 flex flex-row ">
+                <Link
+                    to="/admin/dashboard"
+                    className=" text-center py-2 mx-2 w-full whitespace-nowrap border text-sm border-purple-700 text-white rounded-3xl shadow hover:bg-purple-700 hover:shadow-inner"
+                  >
+                    Dashboard
+                </Link>
+              </div>}
               <p className="underline text-sm font-serif cursor-pointer text-center m-3 bold text-white py-1 rounded-full w-48 mx-auto px-3 hover:bg-purple-700">
                 <Link to="/password/update">Update/Change Password</Link>
               </p>

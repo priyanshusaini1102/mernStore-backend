@@ -3,15 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { myOrders } from '../../actions/orderActions';
 import Loader from '../layout/loader/Loader';
 import OrderCard from './OrderCard';
+import { useNavigate } from 'react-router';
 
 const Orders = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading , orders } = useSelector((state)=>state.myOrdersState);
+  const { isAuthenticated } = useSelector((state)=>state.userState);
 
   useEffect(()=>{
+
+    if(isAuthenticated === false){
+      navigate("/login");
+    }
+
     dispatch(myOrders());
     
-  },[dispatch]);
+  },[dispatch,isAuthenticated,navigate]);
 
   return <div className='bg-purple-300 py-4 '>{loading ? <Loader/> :
   (
