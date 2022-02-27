@@ -13,7 +13,6 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    Button,
   } from "@material-ui/core";
   import { Rating } from "@material-ui/lab";
   import { NEW_REVIEW_RESET } from "../../constants/productConstant";
@@ -102,7 +101,7 @@ const ProductDetails = () => {
                 <MetaData title={`My Store | ${product.name}`} />
                 <div className='flex flex-row  flex-wrap '>
 
-                    <div className='lg:flex-1 flex-none m-auto   '>
+                    <div className='lg:flex-1 flex-none m-auto my-2  '>
                         {product.name && <Carousel images={product.images}/>}
                     </div>
                     {/* Product Heading Section */}
@@ -111,7 +110,7 @@ const ProductDetails = () => {
                     <div className="flex flex-row flex-nowrap" >
                         <Rating classNames="m-0 p-0" {...options} /> <span className='whitespace-nowrap ml-4 justify-center items-center'>({product.numOfReviews} ratings)</span>
                     </div>
-                    <h2 className="text-lg text-gray-600 font-thin m-3  ml-0 ">Price : <span className='text-sm'>₹</span>{product.price}</h2>
+                    <h2 className="font-semibold text-lg text-white p-2 inline-block bg-black rounded-md m-3  ml-0 ">Price : <span className='text-sm'>₹</span>{product.price}</h2>
                     {/* Product Buy Section */}
                     <div className="flex flex-row ">
                     <div className='mx-3 ml-0 border flex flex-row  border-black rounded w-fit '>
@@ -127,8 +126,8 @@ const ProductDetails = () => {
                     
                     {/* Product Description Section */}
                     <p className="text-lg font-semibold mt-6 ">About this item</p>
-                    <p className="text-gray-800">{product.description}</p>
-                    <button onClick={submitReviewToggle} type="button" className="whitespace-nowrap px-6 py-2 ml-0 m-1 mt-5 text-gray-800 border border-gray-400 rounded-md  hover:bg-gray-200 hover:text-black">
+                    <p className="text-gray-500 text-sm">{product.description}</p>
+                    <button onClick={submitReviewToggle} type="button" className="whitespace-nowrap px-6 py-2 ml-0 m-1 mt-5 text-gray-800 border border-gray-800 rounded-md  hover:bg-gray-900 hover:text-white">
                         Submit Review
                     </button>
                     </div>
@@ -144,27 +143,32 @@ const ProductDetails = () => {
                 >
                     <DialogTitle>Submit Review</DialogTitle>
                     <DialogContent className="submitDialog">
+                     <div className='flex flex-col'>
+                         <div className=' mx-auto shadow-md rounded-lg p-3'>
                     <Rating
                         onChange={(e) => setRating(e.target.value)}
                         value={rating}
                         size="large"
-                    />
+                        />
+                        </div>
 
                     <textarea
-                        className="submitDialogTextArea"
+                        className="border-2 border-black rounded-lg m-4 p-2"
                         cols="30"
-                        rows="5"
+                        rows="3"
                         value={comment}
+                        placeholder="Write your review about this product here..."
                         onChange={(e) => setComment(e.target.value)}
                     ></textarea>
+                    </div>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={submitReviewToggle} color="secondary">
+                    <button className='text-red-600 uppercase mx-3 p-2 rounded-lg  hover:shadow-inner' onClick={submitReviewToggle}>
                         Cancel
-                    </Button>
-                    <Button onClick={reviewSubmitHandler} color="primary">
+                    </button>
+                    <button className='text-green-600 uppercase m-2 p-2 rounded-lg  hover:shadow-inner' onClick={reviewSubmitHandler} >
                         Submit
-                    </Button>
+                    </button>
                     </DialogActions>
                 </Dialog>
 

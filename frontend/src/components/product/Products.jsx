@@ -20,7 +20,6 @@ const categories = [
     "Camera",
     "SmartPhones",
     "Mobile",
-    "Cartoon"
 ]
 
 const Products = () => {
@@ -70,7 +69,7 @@ const Products = () => {
                             valueLabelDisplay='auto'
                             aria-labelledby='range-slider'
                             min={0}
-                            max={2500000}
+                            max={1000}
                             color='secondary'
                             />
                     </div>

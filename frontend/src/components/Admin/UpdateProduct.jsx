@@ -2,7 +2,6 @@ import React, {  useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetailsAdmin, updateProduct} from "../../actions/productAction";
 import { useAlert } from "react-alert";
-import { Button } from "@material-ui/core";
 import MetaData from "../layout/MetaData";
 import {  UPDATE_PRODUCT_RESET } from "../../constants/productConstant";
 import Sidebar from "./Sidebar";
@@ -63,8 +62,7 @@ const UpdateProduct = () => {
     "Tops",
     "Attire",
     "Camera",
-    "Cartoon",
-    "SmartPhones",
+    "SmartPhones"
   ];
 
   
@@ -182,21 +180,18 @@ const UpdateProduct = () => {
             {(imagesPreview.length===0) && <div id="mb-4 h-20 bg-gray-100 overflow-x-auto ">
               
               {  product && product.images && product.images.map((image, index) => (
-                <img className="h-20 w-20 object-cover inline m-2" key={index} src={image.url} alt="Product Preview" />
+                <img className="h-20 w-20 object-cover inline sm:m-2 m-1" key={index} src={image.url} alt="Product Preview" />
               ))}  
             </div>}
           <div id="mb-4 h-20 bg-gray-100 overflow-x-auto ">
                
               {imagesPreview.map((image, index) => (
-                <img className="h-20 w-20 object-cover inline m-2" key={index} src={image} alt="Product Preview" />
+                <img className="h-20 w-20 object-cover inline sm:m-2 m-1" key={index} src={image} alt="Product Preview" />
               ))}  
           </div>
           
-          <div className=" mb-4">
+          <div className=" my-4">
             <button type="submit" className={"w-full inline-flex items-center  justify-center px-4 py-2  bg-purple-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-purple-700 active:bg-purple-700 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 disabled:opacity-25 transition"+(loading && " bg-purple-300 hover:bg-purple-300")} disabled={loading ? true : false}>Update Product</button>
-          </div>
-          <div className="mt-6 text-center">
-            Already have an account?<Button type="reset" to="#" className="underline p-1" >Sign in</Button>
           </div>
         </form>
          
