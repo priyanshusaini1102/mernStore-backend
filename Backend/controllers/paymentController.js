@@ -1,4 +1,4 @@
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const catchAsyncErrors = require("../middleWare/catchAsyncErrors");
 
 const Stripe = require("stripe");
 const stripe = Stripe('sk_test_51KOyezSEMZhf5qwyXEGpB1pD0kvM9aDGRmHOsednBBGYDKf5U8j0ATQHIroCDw6RCLVcQ0FWy0AeuGeHDTINWAAF00g5Iz3UIM');
