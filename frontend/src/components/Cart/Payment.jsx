@@ -142,7 +142,7 @@ const Payment = () => {
                 </section>
         <div className="rounded-md">
         </div>
-        <button type="submit" id='payBtn' name='payBtn' className={"submit-button px-4 py-3 my-5 rounded-lg  hover:bg-purple-700 text-white focus:ring  focus:outline-none w-full text-xl font-semibold transition-colors "+(disable? "bg-purple-300 border":"bg-purple-600")}>
+        <button disabled={disable? true : false} type="submit" id='payBtn' name='payBtn' className={"submit-button px-4 py-3 my-5 rounded-lg   text-white focus:ring  focus:outline-none w-full text-xl font-semibold transition-colors "+(disable? "bg-purple-300 hover:bg-purple-300 border":"bg-purple-600 hover:bg-purple-700")}>
             Continue
         </button>
             </form>

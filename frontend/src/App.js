@@ -11,7 +11,7 @@ import LoginSignUp from './components/User/LoginSignUp';
 import AboutUs from './components/AboutUs/AboutUs';
 import Account from './components/User/Account';
 import store from './store';
-import {  clearErrors, loadUser } from './actions/userAction';
+import {  loadFirstTimeUser } from './actions/userAction';
 import UpdatePassword from './components/User/UpdatePassword';
 import ForgotPassword from './components/User/ForgotPassword';
 import ResetPassword from './components/User/ResetPassword';
@@ -47,9 +47,7 @@ function App() {
   }
 
   useEffect(()=>{
-    store.dispatch(loadUser());
-    store.dispatch(clearErrors());
-
+    store.dispatch(loadFirstTimeUser());
     getStripeApiKey();
   }, []);
 

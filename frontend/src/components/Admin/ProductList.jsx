@@ -16,6 +16,7 @@ import { DELETE_PRODUCT_RESET } from "../../constants/productConstant";
 import Sidebar from "./Sidebar";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {  UPDATE_PRODUCT_RESET } from "../../constants/productConstant";
 
 const ProductList = () => {
 
@@ -27,9 +28,7 @@ const ProductList = () => {
   
     const { error, products } = useSelector((state) => state.productsState);
   
-    const { error: deleteError, isDeleted } = useSelector(
-      (state) => state.productState
-    );
+    const { error: deleteError, loading : isDeleteLoading ,isDeleted } = useSelector((state) => state.productState);
   
     const deleteProductHandler = (id) => {
       dispatch(deleteProduct(id));
@@ -48,10 +47,10 @@ const ProductList = () => {
   
       if (isDeleted) {
         alert.success("Product Deleted Successfully");
-        navigate("/admin/dashboard");
+        navigate("/admin/products");
         dispatch({ type: DELETE_PRODUCT_RESET });
       }
-  
+      dispatch({ type: UPDATE_PRODUCT_RESET });
       dispatch(getAdminProduct());
     }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
   
@@ -100,10 +99,11 @@ const ProductList = () => {
               </Link>
   
               <Button
+                disabled={isDeleteLoading ? true : false}
                 onClick={() =>
                   deleteProductHandler(params.getValue(params.id, "id"))
                 }
-                className=" hover:bg-white hover:shadow-inner rounded-full"
+                className={" hover:bg-white hover:shadow-inner rounded-full "+(isDeleteLoading ? "opacity-25": "")}
               >
                 <label className=" decoration-transparent rounded-xl text-red-500 "><DeleteIcon /></label> 
               </Button>

@@ -49,4 +49,9 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
 export const DELETE_USER_RESET = "DELETE_USER_RESET";
 
+export const MAIL_REQUEST = "MAIL_REQUEST"
+export const MAIL_SUCCESS = "MAIL_SUCCESS"
+export const MAIL_FAIL = "MAIL_FAIL"
+export const MAIL_RESET = "MAIL_RESET"
+
 export const CLEAR_ERRORS="CLEAR_ERRORS";

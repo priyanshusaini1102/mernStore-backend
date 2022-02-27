@@ -29,6 +29,9 @@ import {
     DELETE_REVIEW_REQUEST,
     DELETE_REVIEW_SUCCESS,
     DELETE_REVIEW_FAIL,
+    PRODUCT_DETAILS_ADMIN_FAIL,
+    PRODUCT_DETAILS_ADMIN_REQUEST,
+    PRODUCT_DETAILS_ADMIN_SUCCESS
 } from '../constants/productConstant';
 
 // Get All Products
@@ -144,7 +147,7 @@ export const deleteProduct = (id) => async (dispatch) => {
     });
   }
 };
-
+//GET Product Details
 export const getProductDetails = (id)=> async(dispatch)=> {
     try{
         dispatch({type:PRODUCT_DETAILS_REQUEST});
@@ -160,7 +163,23 @@ export const getProductDetails = (id)=> async(dispatch)=> {
         });
     }
 }
+//GET Product Details - admin
+export const getProductDetailsAdmin = (id)=> async(dispatch)=> {
+  try{
+      dispatch({type:PRODUCT_DETAILS_ADMIN_REQUEST});
 
+      const {data} = await axios.get(`/api/v1/product/${id}`);
+
+      dispatch({type:PRODUCT_DETAILS_ADMIN_SUCCESS,payload:data.product});
+
+  }catch(error){
+
+      dispatch({
+          type:PRODUCT_DETAILS_ADMIN_FAIL,
+          payload: error.response.data.message
+      });
+  }
+}
 // NEW REVIEW
 export const newReview = (reviewData) => async (dispatch) => {
     try {

@@ -38,6 +38,10 @@ import {
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+    MAIL_FAIL,
+    MAIL_REQUEST,
+    MAIL_SUCCESS,
+    MAIL_RESET,
     CLEAR_ERRORS,
   } from "../constants/userConstant";
 
@@ -272,3 +276,36 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
         return state;
     }
   };
+
+export const contactMailReducer = ( state = { }, action ) => {
+
+  switch(action.type){
+    case MAIL_REQUEST:
+      return {
+        ...state,
+        isSent:false,
+        loading: true,
+      }
+    case MAIL_SUCCESS: 
+      return {
+        ...state,
+        loading:false,
+        isSent: true
+      }
+    case MAIL_FAIL:
+      return {
+        ...state,
+        isSent: false,
+        error: action.payload,
+        loading:false
+      }
+    case MAIL_RESET:
+      return {
+        ...state,
+        isSent: false,
+      }
+    default:
+      return state;
+  }
+
+}

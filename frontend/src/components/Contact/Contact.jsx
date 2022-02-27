@@ -1,7 +1,56 @@
 import React, { Fragment } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useAlert } from 'react-alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { clearErrors, sendContactMail } from '../../actions/userAction';
+import { MAIL_RESET } from '../../constants/userConstant';
 import MetaData from '../layout/MetaData';
 
 const Contact = () => {
+
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {isSent, error, loading} = useSelector((state)=> state.contactMailState);
+
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [message, setMessage] = useState();
+
+  const contactSubmitHandler = (e) => {
+    e.preventDefault();
+    
+    const myForm = new FormData();
+
+    myForm.set("firstName", firstName);
+    myForm.set("lastName", lastName);
+    myForm.set("email", email);
+    myForm.set("phone", phone);
+    myForm.set("message", message);
+    dispatch(sendContactMail(myForm));
+  }
+
+  useEffect(()=>{
+   
+    if(isSent){
+      dispatch({type:MAIL_RESET});
+      
+      alert.success("Mail Sent Successfully.");
+      navigate("/");
+    }
+
+    if(error){
+      alert.error(error);
+      dispatch(clearErrors);
+    }
+
+  },[dispatch,alert,navigate,error,isSent]);
+
   return <Fragment>
     <MetaData title={`My Store | Contact`} />
     <div className="flex justify-center items-center w-full  h-full bg-white">
@@ -11,25 +60,27 @@ const Contact = () => {
 			<div className="flex">
 				<h1 className="font-bold uppercase text-5xl">Send us a <br /> message</h1>
 			</div>
+      <form encType="application/json" onSubmit={contactSubmitHandler}  >
 			<div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
 				<input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-            type="text" placeholder="First Name*" />
+            type="text" placeholder="First Name*" onChange={(e)=>setFirstName(e.target.value)} required />
 				<input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-            type="text" placeholder="Last Name*" />
+            type="text" placeholder="Last Name"  onChange={(e)=>setLastName(e.target.value)} />
 				<input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-            type="email" placeholder="Email*" />
+            type="email" placeholder="Email*" onChange={(e)=>setEmail(e.target.value)} required />
 				<input className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-            type="number" placeholder="Phone*" />
+            type="number" placeholder="Phone*" onChange={(e)=>setPhone(e.target.value)} required />
         </div>
 				<div className="my-4">
-					<textarea placeholder="Message*" className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
+					<textarea placeholder="Message*" className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline" required  onChange={(e)=>setMessage(e.target.value)}></textarea>
 				</div>
 				<div className="my-2 w-1/2 lg:w-1/4">
-					<button className="uppercase text-sm font-bold tracking-wide bg-gray-900 text-gray-100 p-3 rounded-lg w-full 
+					<button disabled={loading? true : false} type='submit' className="uppercase text-sm font-bold tracking-wide bg-gray-900 text-gray-100 p-3 rounded-lg w-full 
                       focus:outline-none focus:shadow-outline">
-            Send Message
+            {loading ? "Sending..." : "Send Message"}
           </button>
 				</div>
+        </form>
 			</div>
 
 			<div

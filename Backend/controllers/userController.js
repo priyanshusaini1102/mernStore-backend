@@ -266,6 +266,27 @@ exports.updateUserRole = catchAsyncErrors(async(req,res,next)=>{
     })
 })
 
+exports.contactMail = catchAsyncErrors(async(req,res,next)=>{
+    const message = `Phone: ${req.body.phone} \n Email: ${req.body.email} \n Message : \n ${req.body.message}`;
+
+    try{
+        await sendEmail({
+            email: process.env.SMPT_MAIL,
+            subject: `${req.body.firstName} ${req.body.lastName}, have query for mystore.com`,
+            message
+        });
+
+        res.status(200).json({
+            success:true,
+            message: `email sent successfully.`
+        })
+
+    }catch(err){
+        return next(new ErrorHandler(err.message,500));
+
+    }
+})
+
 
 // Delete User --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {

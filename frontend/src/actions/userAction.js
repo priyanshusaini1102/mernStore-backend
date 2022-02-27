@@ -35,6 +35,9 @@ import {
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
+    MAIL_FAIL,
+    MAIL_REQUEST,
+    MAIL_SUCCESS,
     CLEAR_ERRORS,
   } from "../constants/userConstant";
 
@@ -83,6 +86,20 @@ export  const loadUser = () => async(dispatch) => {
 
     }catch(err){
         dispatch({type:LOAD_USER_FAIL, payload:err.response.data.message});
+    }
+}
+
+//load User Data
+export  const loadFirstTimeUser = () => async(dispatch) => {
+    try {
+        dispatch({type: LOAD_USER_REQUEST});
+
+        const {data} = await axios.get('/api/v1/me');
+        
+        dispatch({type: LOAD_USER_SUCCESS,payload:data});
+
+    }catch(err){
+        dispatch({type:LOAD_USER_FAIL, payload:null});
     }
 }
 
@@ -225,6 +242,25 @@ export const getUserDetails = (id) => async (dispatch) => {
       });
     }
   };
+
+
+export const sendContactMail = (mailData) => async(dispatch) => {
+  try{
+    dispatch({ type: MAIL_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.post('/api/v1/contact',mailData,config);
+
+    dispatch({ type:MAIL_SUCCESS, payload: data.success })
+
+  }catch(err){
+    dispatch({
+      type: MAIL_FAIL,
+      payload: err.response.data.message,
+    })
+  }
+}
 
 
 //clearing errors

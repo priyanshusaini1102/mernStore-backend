@@ -56,15 +56,14 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="flex flex-wrap items-center justify-between px-2 py-5 bg-white sticky top-0 z-10 border-b w-full">
+      <nav className="flex flex-wrap items-center justify-between px-2 py-2 bg-white sticky top-0 z-10 border-b w-full">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <NavLink
-              className="text-lg  leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-black"
-              
+              className="text-lg  leading-relaxed inline-block mr-4 py-0 whitespace-nowrap uppercase text-black"
               to="/" 
             >
-              My Store
+             <img src="/MyStoreLogo.png" className="w-20 invert"  alt="" />
             </NavLink>
             <button
               className="text-black cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

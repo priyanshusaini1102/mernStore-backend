@@ -1,10 +1,10 @@
 import React, {  useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, updateProduct,getProductDetails} from "../../actions/productAction";
+import { clearErrors, getProductDetailsAdmin, updateProduct} from "../../actions/productAction";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
 import MetaData from "../layout/MetaData";
-import { UPDATE_PRODUCT_RESET } from "../../constants/productConstant";
+import {  UPDATE_PRODUCT_RESET } from "../../constants/productConstant";
 import Sidebar from "./Sidebar";
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,40 +17,17 @@ const UpdateProduct = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  const { error, product, loading:productLoading } = useSelector((state) => state.productDetailsState);
+  const { error, product, loading:productLoading } = useSelector((state) => state.productDetailsAdminState);
 
   const {loading, error: updateError, isUpdated} = useSelector((state) => state.productState);
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [stock, setStock] = useState(0);
-  const [images, setImages] = useState([]);
-  const [oldImages, setOldImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    "Laptop",
-    "Footwear",
-    "Bottom",
-    "Tops",
-    "Attire",
-    "Camera",
-    "SmartPhones",
-  ];
-
   useEffect(() => {
-    if (product && product._id !== id) {
-      dispatch(getProductDetails(id));
-    } else {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategory(product.category);
-      setStock(product.stock);
-      setOldImages(product.images);
-    }
+    
+    // dispatchProduct();
+   
+    dispatch(getProductDetailsAdmin(id));
+    
+    
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -63,10 +40,34 @@ const UpdateProduct = () => {
 
     if (isUpdated) {
       alert.success("Product Updated Successfully");
-      navigate("/admin/products");
+      navigate("/admin/products")
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch,alert,error,navigate,isUpdated,id,product,updateError]);
+  }, [dispatch,id,alert,error,isUpdated,updateError,navigate]);
+
+ const isGet = product._id === id;
+ 
+
+  const [name, setName] = useState(isGet ? product.name : "");
+  const [price, setPrice] = useState(isGet ? product.price : null);
+  const [description, setDescription] = useState(isGet ? product.description : "");
+  const [category, setCategory] = useState(isGet ? product.category : "");
+  const [stock, setStock] = useState(isGet ? product.stock : null);
+  const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
+
+  const categories = [
+    "Laptop",
+    "Footwear",
+    "Bottom",
+    "Tops",
+    "Attire",
+    "Camera",
+    "Cartoon",
+    "SmartPhones",
+  ];
+
+  
 
   const updateProductSubmitHandler = (e) => {
     e.preventDefault();
@@ -82,15 +83,34 @@ const UpdateProduct = () => {
     images.forEach((image) => {
       myForm.append("images", image);
     });
+   
     dispatch(updateProduct(id, myForm));
   };
+  // const confirmUpdate = () => {
+  //   setName(product.name);
+  //   setPrice(product.price);
+  //   setDescription(product.description);
+  //   setCategory(product.category);
+  //   setStock(product.stock);
+  // }
+  // if(price=== null && product._id === id){
+  //   confirmUpdate();
+  // }
+
+  if(price===null && product._id === id){
+    setName(product.name);
+    setPrice(product.price);
+    setDescription(product.description);
+    setCategory(product.category);
+    setStock(product.stock);
+  }
 
   const updateProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
     setImages([]);
     setImagesPreview([]);
-    setOldImages([]);
+    // setOldImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -105,6 +125,7 @@ const UpdateProduct = () => {
       reader.readAsDataURL(file);
     });
   };
+
 
   return (
     <div className='flex flex-row'>
@@ -133,11 +154,11 @@ const UpdateProduct = () => {
           </div>
           <div className="mb-4">
             <label className="block mb-1" htmlFor="password">Product Description</label>
-            <textarea id="password" type="password" name="password" className="py-2 px-3 h-20 border border-gray-300 focus:border-purple-300 focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" value={description} onChange={(e) => setDescription(e.target.value)} cols="30" rows="1" ></textarea>
+            <textarea id="password" type="text" name="password" className="py-2 px-3 h-20 border border-gray-300 focus:border-purple-300 focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" value={description} onChange={(e) => setDescription(e.target.value)} cols="30" rows="1" ></textarea>
           </div>
           <div className="mb-4">
           <label className="block mb-1" htmlFor="password">Choose Category</label>
-              <select className="py-2 px-3 border border-gray-300 focus:border-purple-300 focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <select className="py-2 px-3 border border-gray-300 focus:border-purple-300 focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" value={ category} onChange={(e) => setCategory(e.target.value)}>
                 <option value="">Select a Category</option>
                 {categories.map((cate) => (
                   <option key={cate} value={cate}>
@@ -158,16 +179,19 @@ const UpdateProduct = () => {
               <input className="hidden " id="formFileSm" name='avatar' type="file" accept="image/*" multiple onChange={updateProductImagesChange} />
               </label>
             </div>
-            <div id="mb-4 h-20 bg-gray-100 overflow-x-auto ">
-              { oldImages && oldImages.map((image, index) => (
+            {(imagesPreview.length===0) && <div id="mb-4 h-20 bg-gray-100 overflow-x-auto ">
+              
+              {  product && product.images && product.images.map((image, index) => (
                 <img className="h-20 w-20 object-cover inline m-2" key={index} src={image.url} alt="Product Preview" />
               ))}  
-            </div>
+            </div>}
           <div id="mb-4 h-20 bg-gray-100 overflow-x-auto ">
+               
               {imagesPreview.map((image, index) => (
                 <img className="h-20 w-20 object-cover inline m-2" key={index} src={image} alt="Product Preview" />
               ))}  
           </div>
+          
           <div className=" mb-4">
             <button type="submit" className={"w-full inline-flex items-center  justify-center px-4 py-2  bg-purple-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-purple-700 active:bg-purple-700 focus:outline-none focus:border-purple-700 focus:ring focus:ring-purple-200 disabled:opacity-25 transition"+(loading && " bg-purple-300 hover:bg-purple-300")} disabled={loading ? true : false}>Update Product</button>
           </div>
@@ -175,6 +199,7 @@ const UpdateProduct = () => {
             Already have an account?<Button type="reset" to="#" className="underline p-1" >Sign in</Button>
           </div>
         </form>
+         
       </div>
     </div>
     

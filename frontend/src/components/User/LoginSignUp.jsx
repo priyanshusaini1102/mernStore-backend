@@ -100,7 +100,7 @@ const LoginSignUp = () => {
           </div>
           <div className="mt-6 flex items-center justify-between">
             <div className="flex items-center">
-              <input id="remember_me" type="checkbox" className="border border-gray-300 text-purple-600 shadow-sm focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50" />
+              <input id="remember_me" type="checkbox" className="border border-gray-300 bg-purple-600 shadow-sm focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50" />
               <label htmlFor="remember_me" className="ml-2 block text-sm leading-5 text-gray-900"> Remember me </label>
             </div>
           </div>
