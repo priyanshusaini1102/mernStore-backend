@@ -6,6 +6,10 @@ const bodyparser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const errorMiddleware = require("./middleWare/error");
 const path = require("path");
+const cors = require('cors')
+app.use(cors({
+    origin: '*',
+}))
 
 //using middlewares
 app.use(express.json());
