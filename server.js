@@ -3,17 +3,16 @@ const cloudinary = require('cloudinary');
 const connectDatabase = require("./config/database");
 
 //handling uncaught exception
-process.on("uncaughtException",(err)=>{
-    console.log(`Error: ${err.message}`);
-    console.log("Shutting down the server due to uncaught exception");
-    process.exit(1);
-})
+// process.on("uncaughtException",(err)=>{
+//     console.log(`Error: ${err.message}`);
+//     console.log("Shutting down the server due to uncaught exception");
+//     process.exit(1);
+// })
 
 //Config 
 if(process.env.NODE_ENV!=="PRODUCTION"){
-    require('dotenv').config({path:"Backend/config/config.env"});
+    require('dotenv').config({path:"config/config.env"});
 }
-
 
 // Connecting to database
 connectDatabase();
@@ -24,7 +23,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET
 })
 
-const server = app.listen(process.env.PORT, ()=> {
+const server = app.listen(process.env.NODE_ENV!=="PRODUCTION" ? 4000 : process.env.PORT, ()=> {
     console.log(`Server is working on http://localhost:${process.env.PORT}`);
 });
 
