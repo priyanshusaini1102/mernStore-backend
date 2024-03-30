@@ -3,7 +3,7 @@ const cloudinary = require('cloudinary');
 const connectDatabase = require("./config/database");
 const cors = require('cors')
 app.use(cors({
-    origin: 'https://mern-store-frontend-sandy.vercel.app'
+    origin: '*'
   }))
 
 //handling uncaught exception
